@@ -1,4 +1,4 @@
-name: Node.js CInode
+name: Node.js CI
 on:
   push:
     branches: ['main']
@@ -36,5 +36,23 @@ jobs:
         run: npm ci --cache .npm --prefer-offline
       - name: Run unit tests
         run: npm test
-    
+
+  release:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up git
+        run: |
+          git config user.email "${{ secrets.GITLAB_USER_EMAIL }}"
+          git config user.name "${{ secrets.GITLAB_USER_NAME }}"
+          git remote set-url origin "https://oauth2:${{ secrets.GITLAB_TOKEN }}@${{ github.server_url }}/$GITHUB_REPOSITORY.git"
+          git checkout ${{ github.ref_name }}
+          git pull origin ${{ github.ref_name }} --rebase
+
+      - name: Run release-it
+        run: npx --yes release-it --ci
+
       
