@@ -46,10 +46,12 @@ jobs:
         - name: e2e-test
           run: echo "Hello E2E !"
   only-canary:
+    env:
+      CANARY : "HelloOnly Canary !"
     runs-on : ubuntu-latest
     steps:
         - name : only-canary
-          run : echo "${{ env.CANARY }}"
+          run : echo "$CANARY"
   
 
   release:
