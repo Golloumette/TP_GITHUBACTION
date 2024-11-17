@@ -53,14 +53,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up git
+      - name: crée une release
         run: |
           git config user.email "${{ secrets.USER_MAIL }}"
           git config user.name "${{ secrets.USER_NAME }}"
           git remote set-url origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           git checkout ${{ github.ref_name }}
           git pull origin ${{ github.ref_name }} --rebase
-
       - name: Run release-it
         run: npx --yes release-it --ci
 
