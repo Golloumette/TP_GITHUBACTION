@@ -47,11 +47,17 @@ jobs:
           run: echo "Hello E2E !"
   only-canary:
     env:
-      CANARY : "HelloOnly Canary !"
+      CANARY : "Hello Only Canary !"
     runs-on : ubuntu-latest
     steps:
         - name : only-canary
           run : echo "$CANARY"
+  integration-test:
+    runs-on : ubuntu-latest
+    needs: unit-test
+    steps:
+        - name: integration test
+          run: echo "HELLO Integration !" 
   
 
   release:
