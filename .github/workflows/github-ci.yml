@@ -37,6 +37,12 @@ jobs:
         run: npm ci --cache .npm --prefer-offline
       - name: Run unit tests
         run: npm test
+  e2e-test:
+    runs-on : ubuntu-latest
+    if : github.event_name == 'pull_request'
+    steps:
+        - name: e2e-test
+          run: echo "Hello E2E !"
 
   release:
     if: github.event_name == 'workflow_dispatch'
