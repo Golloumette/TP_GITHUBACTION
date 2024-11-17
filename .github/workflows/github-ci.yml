@@ -41,7 +41,7 @@ jobs:
         run: npm test
   e2e-test:
     runs-on : ubuntu-latest
-    if : github.event_name == 'pull_request'
+    needs: integration-test
     steps:
         - name: e2e-test
           run: echo "Hello E2E !"
